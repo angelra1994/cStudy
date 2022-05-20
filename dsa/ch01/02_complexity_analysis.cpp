@@ -126,3 +126,21 @@ __int64 power2BF_1(int n) {
 int sum_1(int A[], int n) {
     return (n<1) ? 0 : sum_1(A, n-1) + A[n-1];
 }
+
+/**
+ * @brief 数组A[0, n),将其前后颠倒
+ * 接口: void reverse(int *A, int lo, int hi);
+ */
+
+/**
+ * @brief 递归形式，在线型递归算法中，若递归调用在递归实例中恰好以最后一步操作的形式出现，则称为尾递归(tail recursion)
+ * 属于尾递归形式的算法，均可以简捷地转换为等效的迭代版本
+ * 
+ */
+void reverse_1(int *A, int lo, int hi) {
+    if (lo < hi) { // 规模问题的奇偶性不变，需要两个递归基(问题规模缩减为0或者1的时候，停止递归)
+        swap(A[lo], A[hi])；
+        reverse_1(A, lo+1, hi-1);
+
+    }
+}
