@@ -121,8 +121,6 @@ __int64 power2BF_1(int n) {
  * 在分析复杂度的时候，调用语句本身抹掉，即sum(A,n - 1)调用的消耗是O(1)，计入由它产生的递归实例中
  * 当sum(A, n)调用sum(A, n-1)时，sum(A, n)函数中的数据以"函数帧"的形式被压入一个栈中，并没有处于执行状态
  * 
- * 
- 
  * 共计n+1个递归实例，各自只需O(1)时间，T(n)=O(1)×(n+1)=O(n)
  */
 int sum_1(int A[], int n) {
@@ -141,7 +139,7 @@ int sum_1(int A[], int n) {
  */
 void reverse_1(int *A, int lo, int hi) {
     if (lo < hi) { // 规模问题的奇偶性不变，需要两个递归基(问题规模缩减为0或者1的时候，停止递归)
-        swap(A[lo], A[hi])；
+        swap(A[lo], A[hi]);
         reverse_1(A, lo+1, hi-1);
 
     }
