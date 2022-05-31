@@ -89,10 +89,14 @@ $如果\log_{b}{a}=d，复杂度为O(n^d·{\log_{}{n}})$
 
 - $若f(n)=O(n^{\log_{b}{a}-c})，则T(n)=\Theta(n^{log_{b}{a}})$
   **kd-search：**  $T(n)=2·T(\cfrac{n}{4})+O(1)=O(\sqrt{n})$
-
 - $若f(n)=O(n^{\log_{b}{a}}·\log^k_{}{n})，则T(n)=\Theta(n^{log_{b}{a}}·\log^{k+1}_{}{n})$
   **binary-search：**  $T(n)=1·T(\cfrac{n}{2})+O(1)=O(\log_{}{n})$
   **mergesort：**  $T(n)=2·T(\cfrac{n}{2})+O(n)=O(n·\log_{}{n})$
   **STL mergesort：**  $T(n)=2·T(\cfrac{n}{2})+O(n·\log_{}{n})=O(n·\log^{2}_{}{n})$
 - $若f(n)=O(n^{\log_{b}{a}+c})，则T(n)=\Theta(f(n))$
   **quickSelect(average case)：**  $T(n)=1·T(\cfrac{n}{2})+O(n)=O(n)$
+
+
+
+
+
