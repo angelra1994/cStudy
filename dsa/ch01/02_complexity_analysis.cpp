@@ -126,10 +126,12 @@ long long power2BF_1(int n) {
  * 迭代 iteration
  */
 
+/*#############################################################*/
+
 /**
  * @brief 迭代与递归
  * 
- * （迭代）减而治之 Decrease-and-conquer：划分为一个平凡，一个规模缩减的两个子问题
+ * 减而治之 Decrease-and-conquer：划分为一个平凡，一个规模缩减的两个子问题
  * 递归的求解规模缩减的问题，直到足够小成为一个平凡的子问题(递归基)，再由子问题的解，得到原问题的解
  */
 
@@ -156,6 +158,7 @@ int sum_1(int A[], int n) {
 /**
  * @brief 递归形式，在线型递归算法中，若递归调用在递归实例中恰好以最后一步操作的形式出现，则称为尾递归(tail recursion)
  * 属于尾递归形式的算法，均可以简捷地转换为等效的迭代版本
+ * 递归版本
  * 
  * O(hi - lo + 1) = O(n)
  */
@@ -167,12 +170,10 @@ void reverse_1(int *A, int lo, int hi) {
     // else return; // base case 两种情况，区间宽度最小的奇数和最小的偶数
 }
 
-
 /**
- * @brief 迭代原始版
- * 
+ * @brief 迭代原始版本
+ * O(hi - lo + 1) = O(n)
  */
-
 void reverse_0(int *A, int lo, int hi) {
     next:
     if (lo < hi) { // 规模问题的奇偶性不变，需要两个递归基(问题规模缩减为0或者1的时候，停止递归)
@@ -182,6 +183,51 @@ void reverse_0(int *A, int lo, int hi) {
         goto next;
     }
 }
+
+/**
+ * @brief 迭代精简版本
+ */
+void reverse_0(int *A, int lo, int hi) {
+    while (lo < hi) {
+        swap(A[lo++], A[hi--]);
+    }
+}
+
+
+
+
+/**
+ * @brief 迭代与递归
+ * 
+ * 分而治之 Divide-and-Conquer：为求解一个大规模的问题，可以将其划分为若干子问题（通常两个，且规模大体相当）
+ * 分别求解子问题，由子问题的解。合并得到原问题的解
+ */
+
+
+/**
+ * @brief 数组A[0, n),将其求和
+ * 接口: void sum(int *A, int lo, int hi);
+ */
+/**
+ * @brief 分而治之
+ * Binary Recursion
+ * 
+ * 递归跟踪： T(n) = 各层递归实例所需时间之和 
+ *                = O(1) × (2^0 + 2^1 + ... + 2^logn)
+ *                = O(1) × (2^(1+logn) - 1) = O(n)     // 几何级数
+ * 递推方程： T(n) = 2 × T(n/2) + 1
+ *           T(1) = 1 // base: sum(A, k, k)
+ *           T(n) = 4 × T(n/4) + 3 = 8 × T(n/8) + 7 = n × T(1) + O(n-1) 
+ *                = O(2n-1) = T(n)
+ * 
+ */
+
+int sum_2 ( int A[], int lo, int hi ) { //数组求和算法（二分递归版，入口为sum(A, 0, n)）
+    if ( hi - lo < 2 ) return A[lo]; //递归基：区间宽度不足2
+        int mi = ( lo + hi ) >> 1; //（否则）均分原区间
+    return sum_2 ( A, lo, mi ) + sum_2 ( A, mi, hi ); //递归求和，然后合计
+} //O(hi - lo)，线性正比于区间的长度
+
 
 
 #include <iostream>
