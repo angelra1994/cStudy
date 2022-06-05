@@ -121,6 +121,9 @@ long long power2BF_1(int n) {
 /**
  * @brief Back-Of-The-Envelope-Calculation
  * 封底估计，不用纸笔
+ * 复杂度计算  10^9 约等于 1秒 假定计算机是1GHz的主频
+ * 10^5秒大致就是一天，一天是86400秒
+ * 10^10秒大约就是三生三世， 3个世纪
  * 
  * 级数 series
  * 迭代 iteration
@@ -141,7 +144,7 @@ long long power2BF_1(int n) {
  * @brief Linear Recursion：线性递归
  * 递归跟踪（Recursion Trace）：绘出计算过程中出现的所有递归实例（及其调用关系）
  * 它们各自所需的时间的总和（调用语句本身，计入对应的子实例），即为整体运行时间
- * 在分析复杂度的时候，调用语句本身抹掉，即sum(A,n - 1)调用的消耗是O(1)，计入由它产生的递归实例中
+ * 在分析复杂度的时候，调用语句本身抹掉，即sum(A, n-1)调用的消耗是O(1)，计入由它产生的递归实例中
  * 当sum(A, n)调用sum(A, n-1)时，sum(A, n)函数中的数据以"函数帧"的形式被压入一个栈中，并没有处于执行状态
  * 
  * 共计n+1个递归实例，各自只需O(1)时间，T(n)=O(1)×(n+1)=O(n)
@@ -223,8 +226,10 @@ void reverse_0(int *A, int lo, int hi) {
  */
 
 int sum_2 ( int A[], int lo, int hi ) { //数组求和算法（二分递归版，入口为sum(A, 0, n)）
-    if ( hi - lo < 2 ) return A[lo]; //递归基：区间宽度不足2
-        int mi = ( lo + hi ) >> 1; //（否则）均分原区间
+    if (hi - lo < 2) {
+        return A[lo]; //递归基：区间宽度不足2
+    }
+    int mi = ( lo + hi ) >> 1; //（否则）均分原区间
     return sum_2 ( A, lo, mi ) + sum_2 ( A, mi, hi ); //递归求和，然后合计
 } //O(hi - lo)，线性正比于区间的长度
 
