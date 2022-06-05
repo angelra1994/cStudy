@@ -48,7 +48,7 @@ C++等高级语言的**基本指令**，等效于常数条数的RAM基本指令�
 
 O(1)、O(log^*^n)、O(loglogn)、O(logn)、O(sqrt(n))、O(n)、O(nlog^*^n)、O(nloglogn)、O(nlogn)、O(n^2^)、O(n^3^)、O(n^c^)、O(2^n)
 
-![时间复杂度表](ch01_note.assets\image-20220604225235315.png)
+![时间复杂度表](ch01_note.assets/image-20220604225235315.png)
 
 **迭代：级数求和**
 
