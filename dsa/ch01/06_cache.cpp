@@ -58,7 +58,22 @@ void shfit1(int *A, int n, int k) {
  * reverse的操作是在连续的数据上
  */
 void shfit2(int *A, int n, int k) {
-    reverse(A, k);     //O(3k/2)
-    reverse(A+k, n-k); //O(3(n-k)/2)
-    reverse(A, n); //O(3n/2)
+    reverse(A, 0, k);     //O(3k/2)
+    reverse(A, k, n-k);   //O(3(n-k)/2)
+    reverse(A, 0, n);     //O(3n/2)
+}
+
+void reverse(int *A, int lo, int hi) {
+    if (lo < hi) { // 规模问题的奇偶性不变，需要两个递归基(问题规模缩减为0或者1的时候，停止递归)
+        swap(A[lo], A[hi]);
+        reverse(A, lo+1, hi-1);
+    }
+    // else return; // base case 两种情况，区间宽度最小的奇数和最小的偶数
+}
+
+
+void swap(int &x, int &y) {
+    x = x ^ y;
+    y = x ^ y;
+    x = x ^ y;
 }
