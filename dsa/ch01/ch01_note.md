@@ -96,20 +96,20 @@ O(1)、O(log^*^n)、O(loglogn)、O(logn)、O(sqrt(n))、O(n)、O(nlog^*^n)、O(n
 - Decrease-and-conquer：划分为一个平凡、一个规模缩减的两个子问题，递归的求解规模缩减的问题，直到足够小成为一个平凡的子问题（递归基），再由子问题的解，得到原问题的解
 - Divide-and-conquer：为求解一个大规模问题，可以将其划分为若干个子问题（通常两个，规模大体相当），使用递归分别求解子问题，由子问题的解合并得到原问题的解
 
-**主定理**：分治策略对应的递推式，通常（尽管不总是）形如：T(n)=a×T(n/b)+O(f(n))，原问题被分为a个规模为n/b的子任务；任务的划分、解的合并耗时为f(n)
+**主定理（Master Theorem）**：分治策略对应的递推式，通常（尽管不总是）形如：T(n)=a×T(n/b)+O(f(n))，原问题被分为a个规模为n/b的子任务；任务的划分、解的合并耗时为f(n)
 
 $形如 T(n)=a·T(\cfrac{n}{b})+O(n^d),其中a、b、d都是常数的递推函数$
 $如果\log_{b}{a}<d，复杂度为O(n^d)$
 $如果\log_{b}{a}>d，复杂度为O(n^{\log_{b}{a}})$
 $如果\log_{b}{a}=d，复杂度为O(n^d·{\log_{}{n}})$
 
-- $若f(n)=O(n^{\log_{b}{a}-c})，则T(n)=\Theta(n^{log_{b}{a}})$
+- $若f(n)=O(n^{\log_{b}{a}-\varepsilon})，则T(n)=\Theta(n^{log_{b}{a}})$
   **kd-search：**  $T(n)=2·T(\cfrac{n}{4})+O(1)=O(\sqrt{n})$
-- $若f(n)=O(n^{\log_{b}{a}}·\log^k_{}{n})，则T(n)=\Theta(n^{log_{b}{a}}·\log^{k+1}_{}{n})$
+- $若f(n)=\Theta (n^{\log_{b}{a}}·\log^k_{}{n})，则T(n)=\Theta(n^{log_{b}{a}}·\log^{k+1}_{}{n})$
   **binary-search：**  $T(n)=1·T(\cfrac{n}{2})+O(1)=O(\log_{}{n})$
   **mergesort：**  $T(n)=2·T(\cfrac{n}{2})+O(n)=O(n·\log_{}{n})$
   **STL mergesort：**  $T(n)=2·T(\cfrac{n}{2})+O(n·\log_{}{n})=O(n·\log^{2}_{}{n})$
-- $若f(n)=O(n^{\log_{b}{a}+c})，则T(n)=\Theta(f(n))$
+- $若f(n)=\Omega(n^{\log_{b}{a}+\varepsilon})，则T(n)=\Theta(f(n))$
   **quickSelect(average case)：**  $T(n)=1·T(\cfrac{n}{2})+O(n)=O(n)$
 
 
