@@ -33,7 +33,7 @@ long long fib1(long long n) { //计算Fibonacci数列的第n项（二分递归�
 }
 
 /**
- * @brief Memoization 已经计算的递归实例制表进行查找
+ * @brief 记忆：Memoization 将已经计算的递归实例制表进行查找
  */
 long long fib2(long long n, long long& prev) {  //计算Fibonacci数列第n项（线性递归版）：入口形式fib(n, prev)
     if ( 0 == n ) { //若到达递归基，则
@@ -48,7 +48,8 @@ long long fib2(long long n, long long& prev) {  //计算Fibonacci数列第n项�
 } //用辅助变量记录前一项，返回数列的当前项，T(n)=O(n), 空间也是O(n)
 
 /**
- * @brief fibonacci相邻的两项，滚动的交替计算
+ * @brief 动态规划：dynamic programming 颠倒计算方向：由自顶而下递归，为自底而上迭代
+ *        fibonacci相邻的两项，滚动的交替计算
  */
 long long fib3(long long n) {
     long long f = 1;  // fib(-1)  设计辅助变量
