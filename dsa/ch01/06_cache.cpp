@@ -57,9 +57,12 @@ void shfit1(int *A, int n, int k) {
  * O(3n), 计算机会在访问的数据，取一个 连续的 page 放到一个高速缓存中，避免类io操作（在内存中取数）
  * reverse的操作是在连续的数据上
  */
-void shfit2(int *A, int n, int k) {
+void shfit2(int * A, int n, int k) {
+    // reverse(A, k); 
     reverse(A, 0, k);     //O(3k/2)
+    // reverse(A + k, n-k); 
     reverse(A, k, n-k);   //O(3(n-k)/2)
+    // reverse(A, n); 
     reverse(A, 0, n);     //O(3n/2)
 }
 
