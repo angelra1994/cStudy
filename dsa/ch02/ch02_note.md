@@ -1,4 +1,4 @@
-## 向量 Vector
+# 向量 Vector
 
 
 $$
@@ -35,13 +35,35 @@ c/c++ 语言中，数组A[]中的元素与[0, n) 内的编号一一对应 （类
 
 
 
+平均（average complexity）：根据各种操作出现概率的分布，将对应的成本加权平均
+
+分摊（amortized complexity）：连续实施的足够多次操作，所需总体成本摊还至单次操作
 
 
 
+- V.get(r)和V.put(r,e)不够便捷、直观，可否沿用数组的访问方式V[r]？
+  可以！比如，通过**重载**下标操作符“[]”
+
+```c++
+//可作为左值：V[r] = (T) (2*x + 3)  因为接口的返回值是一个引用，可以作为左值
+template <typename T> T & Vector<T>::operator[]( Rank r ) {
+    return _elem[ r ]; 
+}
+
+//仅限于右值：T x = V[r] + U[s] * W[t]   进行运算，将计算结果赋给左值
+template <typename T> const T & Vector<T>::operator[]( Rank r ) const {
+    return _elem[ r ]; 
+}
+```
+
+- 重载了下标操作符“[]”，对外的V[r] 即对应 内部的 V._elem[r]
+- 这里采用了简易的方式处理意外和错误（比如，入口参数约定：0 <= r < _size
 
 
 
+## 有序向量
 
-
-
+- 无序向量：元素之间能比较是否相等，比对操作
+- 有序向量：元素谁大谁小，比较大小
+- 无序向量经过预处理转换为有序向量之后，相关算法多可优化
 
