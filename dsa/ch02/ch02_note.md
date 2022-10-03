@@ -67,3 +67,12 @@ template <typename T> const T & Vector<T>::operator[]( Rank r ) const {
 - 有序向量：元素谁大谁小，比较大小
 - 无序向量经过预处理转换为有序向量之后，相关算法多可优化
 
+
+
+## 有序向量的查找
+
+- 通用策略：在任何区间[0,n)内，总是选取[$\lambda$·n]作为轴点，0≤$\lambda$≤1；二分查找对应的λ是0.5，Fibonacci查找对应的λ=φ$\lambda=\phi=0.6180339...$
+- 在[0,1)内，$\lambda$如何取值才能达到最优？设平均查找长度为$\alpha(\lambda)·log_2n=O(logn)$，常系数$\alpha(\lambda)$何时达到最小。
+- 递推式：$\frac{}{} ·log_2n = \lambda·[1+\alpha(\lambda)·log_2(\lambda n)]+(1-\lambda )·[2+\alpha(\lambda)·log_2((1-\lambda )n)]$
+- 整理得：$\cfrac{-ln2}{\alpha(\lambda)} = \cfrac{\lambda · ln\lambda + (1-\lambda )·ln(1-\lambda )}{2-\lambda }$
+- 当 $\lambda = \phi = (\sqrt5 - 1)/2时，\alpha(\lambda)=1.440420...$达到最小
