@@ -73,6 +73,17 @@ template <typename T> const T & Vector<T>::operator[]( Rank r ) const {
 
 - 通用策略：在任何区间[0,n)内，总是选取[$\lambda$·n]作为轴点，0≤$\lambda$≤1；二分查找对应的λ是0.5，Fibonacci查找对应的λ=φ$\lambda=\phi=0.6180339...$
 - 在[0,1)内，$\lambda$如何取值才能达到最优？设平均查找长度为$\alpha(\lambda)·log_2n=O(logn)$，常系数$\alpha(\lambda)$何时达到最小。
-- 递推式：$\frac{}{} ·log_2n = \lambda·[1+\alpha(\lambda)·log_2(\lambda n)]+(1-\lambda )·[2+\alpha(\lambda)·log_2((1-\lambda )n)]$
+- 递推式：$\alpha(\lambda)·log_2n = \lambda·[1+\alpha(\lambda)·log_2(\lambda n)]+(1-\lambda )·[2+\alpha(\lambda)·log_2((1-\lambda )n)]$
 - 整理得：$\cfrac{-ln2}{\alpha(\lambda)} = \cfrac{\lambda · ln\lambda + (1-\lambda )·ln(1-\lambda )}{2-\lambda }$
 - 当 $\lambda = \phi = (\sqrt5 - 1)/2时，\alpha(\lambda)=1.440420...$达到最小
+
+![image-20221003155505169](assets\image-20221003155505169.png)
+
+
+
+二分查找以及fib查找均为严格兑现search()接口的语义约定：返回 **不大于e的最后一个元素的秩**
+
+只有兑现这一约定，才能有效的支持相关算法，比如：V.insert(1+V.search(e), e)
+
+- 当有多个命中元素时，必须返回最靠后（秩最大）者
+- 失败时，应返回小于e的最大者（含哨兵[lo - 1]）
