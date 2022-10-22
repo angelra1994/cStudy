@@ -87,3 +87,83 @@ template <typename T> const T & Vector<T>::operator[]( Rank r ) const {
 
 - 当有多个命中元素时，必须返回最靠后（秩最大）者
 - 失败时，应返回小于e的最大者（含哨兵[lo - 1]）
+
+
+
+## 起泡排序
+
+```c++
+template <typename T>
+void Vector<T>::bubbleSort(Rank lo, Rank hi)
+{
+    while (!bubble(lo, hi--))
+        ;
+}
+
+/**
+ * @brief 扫描交换
+ * 乱序限于(0, √n)时，仍需O(n^(3/2))时间，按理O(n) 应该已经满足
+ */
+template <typename T>
+bool Vector<T>::bubble(Rank lo, Rank hi)
+{
+    // 整体有序的标志
+    bool sorted = true;
+    while (++lo < hi) // 从左向右逐一检查各相邻元素
+    {
+        if (_elem[lo - 1] > _elem[lo]) // 若逆序，则说明整体无序
+        {
+            sorted = false;
+            swap(_elem[lo - 1], _elem[lo]); // 需要交换，之后局部有序
+        }
+    }
+    return sorted;
+}
+```
+
+
+
+![image-20221022222506282](assets\image-20221022222506282.png)
+
+- 此时多余出来的时间消耗就是，后缀中对于已经就位元素的反复扫描交换，需要及时分解出来
+
+
+
+```c++
+/**
+ * @brief 逐趟扫描交换，直到全序
+ */
+template <typename T>
+void Vector<T>::bubbleSort(Rank lo, Rank hi)
+{
+    while (lo <= (hi = bubble(lo, hi)))
+        ;
+}
+
+template <typename T>
+Rank Vector<T>::bubble(Rank lo, Rank hi)
+{
+    Rank last = lo;   // 右侧逆袭对初始化为[lo - 1, lo]
+    while (++lo < hi) // 自左向右，逐一检查各对相邻元素
+    {
+        if (_elem[lo - 1] > _elem[lo]) // 若逆序
+        {
+            last = lo;                      // 更新最右侧逆序对位置
+            swap(_elem[lo - 1], _elem[lo]); // 并交换
+        }
+    }
+    return last; // 返回最右侧的逆序对位置
+}
+```
+
+
+
+![image-20221022231235088](assets\image-20221022231235088.png)
+
+- 算法的执行结果是梯形的时间
+
+>  起泡排序中，元素a和元素b的相对位置发生变化只有一种可能，
+>
+> 分别与其它元素交换，a和b互相位置接近直至相邻；在接下来一轮的扫描交换中，二者因**逆序**而交换位置
+>
+> 起泡排序是稳定的，时间效率：最好O(n)，最坏O(n^2）
