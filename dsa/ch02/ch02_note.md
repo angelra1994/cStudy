@@ -167,3 +167,95 @@ Rank Vector<T>::bubble(Rank lo, Rank hi)
 > 分别与其它元素交换，a和b互相位置接近直至相邻；在接下来一轮的扫描交换中，二者因**逆序**而交换位置
 >
 > 起泡排序是稳定的，时间效率：最好O(n)，最坏O(n^2）
+
+
+
+```c++
+/**
+ * @brief 基础版本
+ */
+template <typename T>
+void bubbleSort1(Rank lo, Rank hi)
+{
+    while (lo < --hi)
+    {                                         //逐趟起泡扫描
+        for (Rank i = lo; i < hi; i++)        //逐对检查相邻元素
+        {
+            if (_elem[i] > _elem[i + 1])      //若逆序
+            {
+                swap(_elem[i], _elem[i + 1]); //则交换
+            }
+        }
+    }
+}
+```
+
+![image-20221103000937721](assets\image-20221103000937721.png)
+
+```c++
+/**
+ * @brief 提前终止版
+ */
+template <typename T>
+void bubbleSort2(Rank lo, Rank hi)
+{
+    for (bool sorted = false; sorted = !sorted; hi--)
+    {
+        for (Rank i = lo + 1; i < hi; i++)
+        {
+            if (_elem[i - 1] > _elem[i])
+            {
+                swap(_elem[i - 1], _elem[i]);
+                sorted = false;
+            }
+        }
+    }
+}
+```
+
+![image-20221103000740292](assets\image-20221103000740292.png)
+
+```c++
+/**
+ * @brief 跳跃版
+ */
+template <typename T>
+void bubbleSort3(Rank lo, Rank hi)
+{
+    for (Rank last; lo < hi; hi = last)
+    {
+        for (Rank i = (last = lo) + 1; i < hi; i++)
+        {
+            if (_elem[i - 1] > _elem[i])
+            {
+                swap(_elem[i - 1], _elem[last = i]);
+            }
+        }
+    }
+}
+```
+
+![image-20221103001005597](assets\image-20221103001005597.png)
+
+
+
+## 归并排序
+
+分治策略
+
+- 序列一分为二，O(1)
+- 子序列递归排序 2×T(n/2)
+- 合并有序子序列 O(n)
+
+优点
+
+- 实现最坏情况下最优$\Omega(nlogn)$性能的第一个排序算法 
+- 不需随机读写，完全顺序访问——尤其适用于列表之类的序列、磁带之类的设备
+- 只要实现恰当，可保证稳定——出现雷同元素时，左侧子向量优先
+- 可扩展性极佳，十分适宜于外部排序——海量网页搜索结果的归并
+- 易于并行化 
+
+缺点
+
+- 非就地，需要对等规模的辅助空间——可否更加节省？
+- 即便输入已是完全（或接近）有序，仍需$\Omega(nlogn)$时间

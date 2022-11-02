@@ -113,6 +113,50 @@ void bubbleSort3(Rank lo, Rank hi)
     }
 }
 
+template <typename T>
+void mergeSort(Rank lo, Rank hi)
+{
+    if (hi - lo < 2) {  //单元素区间自然有序，否则...
+        return
+    }
+    int mi = lo + (hi - lo) >> 1; //以中点为
+    mergeSort(lo, mi);  //对前半段排序
+    mergeSort(mi, hi); //对后半段排序
+    merge(lo, mi, hi); //归并
+}
+
+/**
+ * @brief [lo, mi) 和 [mi, hi) 各自有序
+ */
+template <typename T>
+void Vector<T>::merge(Rank lo, Rank mi, Rank hi)
+{
+    Rank i = 0;
+    T *A = _elem + lo; // A = _elem[lo, hi)，就
+
+    Rank j = 0;
+    Rank lb = mi - lo;
+    T *B = new T[lb]; // B[0, lb) <-- _elem[lo, mi) B需要另外开辟空间
+
+    for (Ran i = 0; i < lb; i++)
+    {
+        B[i] = A[i];
+    }
+    Rank k = 0;
+    Rank lc = hi - mi;
+    T *C = _elem + mi; // C[0, lc] = _elem[mi, hi)，就地
+
+    while ((j < lb) && (K < lc))
+    {
+        A[i++] = (B[j] <= C[k]) ? B[j++] : C[k++];
+    }
+    while (j < lb) //若C先耗尽，则
+    {
+        A[i++] = B[j++]; //将B残余的后缀归入A中
+    }
+    delete [] B;
+}
+
 void swap(int &x, int &y)
 {
     x = x ^ y;
