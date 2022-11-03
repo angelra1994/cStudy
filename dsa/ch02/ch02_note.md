@@ -259,3 +259,24 @@ void bubbleSort3(Rank lo, Rank hi)
 
 - 非就地，需要对等规模的辅助空间——可否更加节省？
 - 即便输入已是完全（或接近）有序，仍需$\Omega(nlogn)$时间
+
+
+
+## Bitmap/位图
+
+是一个向量，每一个成员都是一个bit
+
+| 描述有限的整数集合 | $\forall 0\le k\le U: $             |                    |
+| ------------------ | ----------------------------------- | ------------------ |
+| k是否属于集合S     | $k\in S ?$                          | bool test(int k);  |
+| k并到这个集合S     | $S \cup \left \{ k \right \} $      | void set(int k);   |
+| 从集合S中减去k     | $S \setminus \left \{ k \right \} $ | void clear(int k); |
+
+实现O(1)的复杂度
+
+
+
+
+
+
+
