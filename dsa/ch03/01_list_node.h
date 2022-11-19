@@ -6,7 +6,7 @@ using ListNodePosi = ListNode<T> *; //列表节点位置
 template <typename T>
 struct ListNode
 {                         //列表节点模板类（以双向链表形式实现）
-    / 成员
+    // 成员
     T data;               //数值
     ListNodePosi<T> pred; //前驱
     ListNodePosi<T> succ; //后继
