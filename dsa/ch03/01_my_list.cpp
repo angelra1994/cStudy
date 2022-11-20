@@ -229,3 +229,54 @@ ListNodePosi<T> List<T>::search(T const &e, int n, ListNodePosi<T> p) const
     while ((-1 < n) && (e < p->data)); //逐个比较，直至命中或越界
     return p;                          //失败时，返回区间左边界的前驱（可能是header）
 }
+
+/**
+ * @brief 对列表中起始于位置p、宽度为n的区间做选择排序
+ */
+template <typename T>
+void List<T>::selectionSort(ListNodePosi<T> p, int n)
+{
+    ListNodePosi<T> head = p->pred, tail = p;
+    for (int i = 0; i < n; i++)
+    {
+        tail = tail->succ;                //待排序区间为(head, tail)
+    }                                     //警告预处理之后 head是[p-1], tail是（p+n） 
+    while (1 < n)
+    {                                                   //反复从（非平凡）待排序区间内找出最大者，并移至有序区间前端
+        insert(remove(selectMax(head->succ, n)), tail); //可能就在原地...
+        tail = tail->pred;
+        n--; //待排序区间、有序区间的范围，均同步更新
+    }
+}
+
+template <typename T> //从起始于位置p的n个元素中选出最大者，1 < n
+ListNodePosi<T> List<T>::selectMax(ListNodePosi<T> p, int n)
+{                                             //θ(n)
+    ListNodePosi<T> max = p;                  //最大者暂定为p
+    for (ListNodePosi<T> cur = p; 1 < n; n--) //后续节点逐一与max比较
+    {
+        // not less than, 即 ≥。当序列中存在重复的元素(多个max)，保证算法的稳定性，最靠后者作为交换的max
+        if (!lt((cur = cur->succ)->data, max->data)) // data ≥ max  
+        {
+            // max会主次递增而不会下降，painter's aglorithms
+            max = cur; //则更新最大元素位置记录
+
+        }
+    }
+    return max; //返回最大节点位置
+}
+
+/**
+ * @brief 对于列表起始位于p的连续n个元素做插入排序，valid(p) && rank(p) + n <= size
+ */
+template <typename T>
+void List<T>::insertionSort(ListNodePosi<T> p, int n)
+{
+    // r是有序前缀的长度
+    for (int r = 0; r < n; r++)
+    {                                           //逐一引入各节点，由S(r)得到S(r+1)
+        insert(search(p->data, r, p), p->data); //查找 + 插入
+        p = p->succ;
+        remove(p->pred); //转向下一节点
+    }                    // n次迭代，每次O(r + 1)
+} //仅使用O(1)辅助空间，属于就地算法 (in-place-aglorithms)
